@@ -10,3 +10,12 @@ dist/
 release/
 .vscode
 transcode-cache/
+
+# Tizen client build/package output (tz pack-chain's actual output dirs)
+tizen/Debug/
+tizen/Release/
+tizen/Test/
+tizen/*.wgt
+tizen/.buildResult/
+tizen/.sign/
+tizen/.tizen-rds/
