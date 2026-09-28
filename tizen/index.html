@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Nodecast TV</title>
+    <meta name="viewport" content="width=1920, height=1080, user-scalable=no">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+    <!-- Samsung AVPlay surface. Sits on its own hardware video plane below
+         the browser layer; the UI screens above must stay transparent
+         wherever video should show through. Not used on desktop. -->
+    <object id="av-player" type="application/avplayer"></object>
+
+    <!-- Desktop dev-only fallback: plain <video>, driven by hls.js when needed. -->
+    <video id="dev-video" playsinline></video>
+
+    <div id="buffering-spinner" class="spinner hidden"></div>
+
+    <!-- Screens -->
+    <div id="screen-setup" class="screen hidden">
+        <div class="setup-box">
+            <h1>Nodecast TV</h1>
+            <p class="setup-hint">Enter your server address and login.</p>
+
+            <label>Server URL</label>
+            <input id="input-server" type="text" placeholder="http://192.168.1.10:3000" autocomplete="off">
+
+            <label>Username</label>
+            <input id="input-username" type="text" autocomplete="off">
+
+            <label>Password</label>
+            <input id="input-password" type="password" autocomplete="off">
+
+            <div id="setup-error" class="setup-error hidden"></div>
+
+            <button id="btn-connect" class="btn-primary">Connect</button>
+        </div>
+    </div>
+
+    <div id="screen-browse" class="screen hidden">
+        <div class="browse-header">
+            <span id="browse-source-name" class="browse-source-name"></span>
+        </div>
+        <div class="browse-columns">
+            <div id="list-categories" class="list-col list-col-categories"></div>
+            <div id="list-channels" class="list-col list-col-channels"></div>
+            <div id="browse-details" class="browse-details hidden">
+                <img id="browse-details-logo" class="browse-details-logo" src="" alt="">
+                <div id="browse-details-name" class="browse-details-name"></div>
+                <div id="browse-details-now" class="browse-details-now"></div>
+                <div class="browse-details-progress">
+                    <div id="browse-details-progress-fill" class="browse-details-progress-fill"></div>
+                </div>
+                <div id="browse-details-desc" class="browse-details-desc"></div>
+                <div id="browse-details-next" class="browse-details-next"></div>
+            </div>
+        </div>
+        <div id="browse-empty" class="browse-empty hidden">No channels in this category.</div>
+    </div>
+
+    <div id="screen-search" class="screen hidden">
+        <div class="search-columns">
+            <div class="search-keyboard">
+                <div id="search-query" class="search-query">Search: _</div>
+                <div id="search-grid" class="search-grid"></div>
+            </div>
+            <div class="search-results-col">
+                <div id="list-search-results" class="list-col list-col-channels"></div>
+                <div id="search-hint" class="search-hint hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-playing" class="screen hidden">
+        <div id="playing-banner" class="playing-banner hidden">
+            <img id="playing-logo" class="playing-logo" src="" alt="">
+            <div class="playing-info">
+                <div id="playing-number" class="playing-number"></div>
+                <div id="playing-name" class="playing-name"></div>
+                <div id="playing-now" class="playing-now"></div>
+                <div class="playing-progress">
+                    <div id="playing-progress-fill" class="playing-progress-fill"></div>
+                </div>
+                <div id="playing-next" class="playing-next"></div>
+            </div>
+            <div id="playing-fav" class="playing-fav"></div>
+        </div>
+        <div id="playing-error" class="playing-error hidden">
+            <div id="playing-error-text"></div>
+            <div class="playing-error-hint">Press OK to retry</div>
+        </div>
+    </div>
+
+    <div id="global-toast" class="toast hidden"></div>
+
+    <!-- Loaded on the TV only; 404s harmlessly in desktop Chrome. -->
+    <script src="$WEBAPIS/webapis/webapis.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/epg.js"></script>
+    <script src="js/keys.js"></script>
+    <script src="js/list.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/screens/setup.js"></script>
+    <script src="js/screens/browse.js"></script>
+    <script src="js/screens/search.js"></script>
+    <script src="js/screens/playing.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
